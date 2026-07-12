@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图像颜色聚类可视化</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Inline empty favicon to avoid a noisy 404 for /favicon.ico. -->
+  <link rel="icon" href="data:," />
+
+  <!-- ECharts via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  <!-- echarts-gl powers the "scatter3d" chart style (Task 8): it registers the
+       grid3D component and scatter3D series used by buildOption("scatter3d"). -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>图像颜色聚类可视化</h1>
+    <p class="subtitle">上传或选择一张图片，使用 k-means 提取主色并用 ECharts 可视化。</p>
+  </header>
+
+  <main class="app-main">
+    <!-- ============ 左侧：图片输入与预览 ============ -->
+    <section class="panel panel-input" aria-label="图片输入与预览">
+      <h2>图片</h2>
+
+      <!-- 文件选择 -->
+      <div class="control-row">
+        <label for="file-input">上传图片：</label>
+        <input id="file-input" type="file" accept="image/*" />
+      </div>
+
+      <!-- 图片画廊占位（内置样例图 01.jpg ~ 07.jpg，由后续任务填充） -->
+      <div id="gallery" class="gallery" aria-label="内置样例图片">
+        <!-- gallery thumbnails injected by js/main.js (Task 7) -->
+      </div>
+
+      <!-- 预览区：缩略 canvas 与原图 img -->
+      <div class="preview">
+        <canvas id="preview-canvas" width="150" height="150"></canvas>
+        <img id="preview-img" alt="图片预览" hidden />
+      </div>
+    </section>
+
+    <!-- ============ 中间：控件 ============ -->
+    <section class="panel panel-controls" aria-label="控件">
+      <h2>控件</h2>
+
+      <!-- K 控件 -->
+      <div class="control-row">
+        <label for="k-control">聚类数 K：</label>
+        <input id="k-control" type="range" min="1" max="12" step="1" value="5" />
+        <output id="k-value" for="k-control">5</output>
+      </div>
+
+      <!-- 颜色空间选择 -->
+      <div class="control-row">
+        <label for="space-select">颜色空间：</label>
+        <select id="space-select">
+          <option value="RGB" selected>RGB</option>
+          <option value="LAB">LAB</option>
+          <option value="OKLAB">OKLab</option>
+          <option value="OKLCH">OKLCH</option>
+        </select>
+      </div>
+
+      <!-- 图表样式选择 -->
+      <div class="control-row">
+        <label for="style-select">图表样式：</label>
+        <select id="style-select">
+          <option value="pie" selected>饼图</option>
+          <option value="doughnut">环形图</option>
+          <option value="bar">柱状图</option>
+          <option value="tree">树图</option>
+          <option value="scatter3d">3D 散点</option>
+        </select>
+      </div>
+
+      <!-- AI 配置输入框 + 按钮 -->
+      <fieldset class="ai-config">
+        <legend>AI 配色和谐度判断</legend>
+
+        <!-- 模式切换：共享服务（免费）/ 自带 API Key -->
+        <div class="control-row ai-mode" role="radiogroup" aria-label="AI 判断模式">
+          <label>
+            <input type="radio" name="ai-mode" value="shared" checked />
+            使用免费服务
+          </label>
+          <label>
+            <input type="radio" name="ai-mode" value="byok" />
+            使用个人 API Key
+          </label>
+        </div>
+
+        <!-- 共享服务说明（默认显示） -->
+        <p id="ai-shared-note" class="ai-note">
+          免费服务仅用于判断配色是否和谐
+        </p>
+
+        <!-- 自带 Key 的配置（仅在 BYOK 模式显示） -->
+        <div id="ai-byok-fields" hidden>
+          <div class="control-row">
+            <label for="ai-base-url">Base URL：</label>
+            <input id="ai-base-url" type="text" placeholder="https://api.deepseek.com" value="https://api.deepseek.com" />
+          </div>
+          <div class="control-row">
+            <label for="ai-model">模型：</label>
+            <input id="ai-model" type="text" placeholder="deepseek-v4-flash" value="deepseek-v4-flash" />
+          </div>
+          <div class="control-row">
+            <label for="ai-api-key">API Key：</label>
+            <input id="ai-api-key" type="password" placeholder="仅在内存中使用，不会写入源码" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="control-row">
+          <button id="ai-judge-btn" type="button">判断配色是否和谐</button>
+        </div>
+        <div id="ai-result" class="ai-result" aria-live="polite"></div>
+      </fieldset>
+    </section>
+
+    <!-- ============ 右侧：图表容器 ============ -->
+    <section class="panel panel-chart" aria-label="图表">
+      <h2>可视化</h2>
+      <div id="chart" class="chart-container"></div>
+    </section>
+  </main>
+
+  <!-- 应用入口（原生 ES Module） -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

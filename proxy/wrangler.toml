@@ -1,0 +1,25 @@
+# Cloudflare Worker 配置示例 —— 配色和谐度判断代理
+# =================================================
+# 部署前把 name 改成你自己的 Worker 名称即可。
+#
+# ⚠️ 不要把任何密钥写进本文件！
+#   - DEEPSEEK_API_KEY 用 `wrangler secret put DEEPSEEK_API_KEY` 设置（加密存储）。
+#   - 本地开发时，把 DEEPSEEK_API_KEY / ALLOWED_ORIGINS 写进 proxy/.dev.vars
+#     （该文件已被 .gitignore 忽略，见 proxy/.dev.vars.example）。
+
+name = "color-harmony-proxy"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+# 非敏感的可配置项可以写在 [vars] 里（会进仓库，别放密钥）。
+# ALLOWED_ORIGINS：允许的前端来源，逗号分隔；"*" 表示允许任意来源（不建议生产用）。
+# RATE_LIMIT_PER_MINUTE：每个 IP 每分钟允许的请求次数。
+[vars]
+ALLOWED_ORIGINS = "http://localhost:8000"
+RATE_LIMIT_PER_MINUTE = "10"
+
+# 若要把限流升级为持久、跨实例可靠的方案（见 worker.js 注释），
+# 可绑定一个 KV namespace，然后在 worker.js 中改用它：
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT_KV"
+# id = "<your-kv-namespace-id>"

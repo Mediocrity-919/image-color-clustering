@@ -1,0 +1,153 @@
+/* Image Color Clustering - base layout styles.
+   Detailed styling can evolve alongside later feature tasks. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #1f2933;
+  background: #f5f7fa;
+  line-height: 1.5;
+}
+
+.app-header {
+  padding: 16px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e4e7eb;
+}
+
+.app-header h1 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+
+.app-header .subtitle {
+  margin: 0;
+  color: #616e7c;
+  font-size: 14px;
+}
+
+.app-main {
+  display: grid;
+  grid-template-columns: 300px 300px 1fr;
+  gap: 16px;
+  padding: 16px 24px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #e4e7eb;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.control-row label {
+  font-size: 14px;
+  min-width: 84px;
+}
+
+.control-row input[type="text"],
+.control-row input[type="password"],
+.control-row select {
+  flex: 1;
+  min-width: 120px;
+  padding: 4px 6px;
+  border: 1px solid #cbd2d9;
+  border-radius: 4px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.gallery img.selected {
+  border-color: #2b6cb0;
+}
+
+.preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 160px;
+  background: #f0f4f8;
+  border-radius: 4px;
+}
+
+.preview canvas {
+  max-width: 100%;
+  image-rendering: pixelated;
+  border: 1px solid #cbd2d9;
+  background: #fff;
+}
+
+.ai-config {
+  border: 1px solid #e4e7eb;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.ai-config legend {
+  font-size: 13px;
+  color: #616e7c;
+  padding: 0 4px;
+}
+
+.ai-result {
+  font-size: 14px;
+  min-height: 20px;
+  color: #334e68;
+}
+
+button {
+  padding: 6px 12px;
+  border: 1px solid #2b6cb0;
+  background: #2b6cb0;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #244e8a;
+}
+
+.chart-container {
+  width: 100%;
+  height: 480px;
+}

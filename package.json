@@ -1,0 +1,16 @@
+{
+  "name": "image-color-clustering",
+  "version": "0.1.0",
+  "description": "Client-side web page that clusters image pixel colors with a hand-written k-means and visualizes the palette with ECharts.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "dev": "python -m http.server 8000",
+    "proxy": "node proxy/local-server.mjs"
+  },
+  "devDependencies": {
+    "fast-check": "^4.9.0",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,19 @@
+# 本地开发环境变量示例（复制为 proxy/.dev.vars 后填入真实值再用）
+# ================================================================
+# ⚠️ 真实的 proxy/.dev.vars 已被 .gitignore 忽略，不会进仓库。
+#    本示例文件只写占位/说明，不要在这里填真实密钥。
+#
+# 用法：
+#   1. 复制本文件为 proxy/.dev.vars
+#   2. 填入你自己的 DeepSeek key 与允许来源
+#   3. 在 proxy/ 目录运行 `wrangler dev`（会自动读取 .dev.vars）
+
+# DeepSeek API Key（真实密钥；生产用 `wrangler secret put DEEPSEEK_API_KEY` 设置，
+# 本地开发才写在 .dev.vars 里）。
+DEEPSEEK_API_KEY=
+
+# 允许的前端来源，逗号分隔；"*" 表示任意来源（仅调试用，生产请写具体域名）。
+ALLOWED_ORIGINS=http://localhost:8000
+
+# 每个 IP 每分钟允许的请求次数（可选，默认 10）。
+RATE_LIMIT_PER_MINUTE=10
