@@ -7,7 +7,7 @@ import { COLOR_SPACES } from "./colorSpace.js";
 import { judgeHarmony, judgeHarmonyViaProxy } from "./aiHarmony.js";
 
 // 共享服务模式使用的代理地址（真实 API Key 只在代理服务端）。留空表示未配置。
-const PROXY_URL = "http://localhost:8787";
+const PROXY_URL = "https://image-color-clustering.2145549743.workers.dev";
 
 const DEFAULT_BASE_URL = "https://api.deepseek.com";
 const DEFAULT_MODEL = "deepseek-v4-flash";
